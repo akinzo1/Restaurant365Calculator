@@ -16,34 +16,46 @@ namespace Restaurant365.Utility
             if (input != null && input.StartsWith("//"))
             {
                 //Retrieve the delimiter string
-                var delimiterInput = input.Between(@"//", @"\n"); 
+                var delimiterInput = input.Between(@"//", @"\n").FirstOrDefault() ?? ""; 
 
-                //retrieve single custom delimiter of any length or single character
-                var singleDelimiterFromDelimiterInput = delimiterInput.StartsWith("[") ? delimiterInput.Between("[", "]") : delimiterInput[0].ToString(); 
+                //retrieve single custom delimiter or multiple delimiters of multiple characters
+                var singleDelimiterFromDelimiterInput = delimiterInput.StartsWith("[") ? delimiterInput.Between("[", "]") : new List<string> { delimiterInput[0].ToString() };
 
-                if (!string.IsNullOrEmpty(singleDelimiterFromDelimiterInput) && !delimiterList.Contains(singleDelimiterFromDelimiterInput))
+                if (singleDelimiterFromDelimiterInput.Any())
                 {
-                    delimiterList.Add(singleDelimiterFromDelimiterInput.ToString());
+                    delimiterList.AddRange(singleDelimiterFromDelimiterInput);
                 }
 
             }
 
-            return delimiterList;    
+            return delimiterList.Distinct().ToList();    
         }
 
-        static string Between(this string input, string charFrom, string charTo)
+        private static List<string> Between(this string body, string start, string end)
         {
-            int posFrom = input.IndexOf(charFrom) + charFrom.Length - 1;
-            if (posFrom != -1) //if found char
+            var matched = new List<string>();
+
+            int indexStart;
+            int indexEnd;
+
+            bool exit = false;
+            while (!exit)
             {
-                int posTo = input.IndexOf(charTo, posFrom + 1);
-                if (posTo != -1) //if found char
+                indexStart = body.IndexOf(start);
+
+                if (indexStart != -1)
                 {
-                    return input.Substring(posFrom + 1, posTo - posFrom - 1);
+                    indexEnd = indexStart + body.Substring(indexStart).IndexOf(end);
+                    matched.Add(body.Substring(indexStart + start.Length, indexEnd - indexStart - start.Length));
+                    body = body.Substring(indexEnd + end.Length);
+                }
+                else
+                {
+                    exit = true;
                 }
             }
 
-            return string.Empty;
+            return matched;
         }
     }
 }
