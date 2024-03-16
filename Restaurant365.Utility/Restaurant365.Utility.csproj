@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Restaurant365.Utility\Restaurant365.Utility.csproj" />
-  </ItemGroup>
-
 </Project>

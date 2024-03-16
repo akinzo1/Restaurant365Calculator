@@ -91,7 +91,7 @@ public class CalculatorServiceTests
         CalculatorService service = new();
         var input = @"1\n2,3";
         var expected = 6;
-        var message = service.Calculate(input, null, @"\n");
+        var message = service.Calculate(input, null, true);
         Assert.Equal(expected, message.Result);
 
     }
@@ -106,7 +106,7 @@ public class CalculatorServiceTests
         var exceptionType = typeof(InvalidOperationException);
 
         var ex = Record.Exception(() => {
-            service.Calculate(input, null, string.Empty, false);
+            service.Calculate(input, null, false, false);
         });
 
         Assert.NotNull(ex);
@@ -126,7 +126,7 @@ public class CalculatorServiceTests
         var exceptionType = typeof(InvalidOperationException);
 
         var ex = Record.Exception(() => {
-            service.Calculate(input, null, string.Empty, false);
+            service.Calculate(input, null, false, false);
         });
 
         Assert.Null(ex);
@@ -140,7 +140,31 @@ public class CalculatorServiceTests
         var expected = 8;
         CalculatorService service = new();
 
-        var message = service.Calculate(input, null, string.Empty, true, 1000);
+        var message = service.Calculate(input, null, false, true, 1000);
+        Assert.Equal(expected, message.Result);
+
+    }
+
+    [Fact]
+    public void Calculate_NewLineSupported_SingleCustomDelimiter()
+    {
+        var input = @"//#\n2#5";
+        var expected = 7;
+        CalculatorService service = new();
+
+        var message = service.Calculate(input, null, true, true, 1000);
+        Assert.Equal(expected, message.Result);
+
+    }
+
+    [Fact]
+    public void Calculate_NewLineNotSupported_SingleCustomDelimiter()
+    {
+        var input = @"//#\n2#5";
+        var expected = 5;
+        CalculatorService service = new();
+
+        var message = service.Calculate(input, null, false, true, 1000);
         Assert.Equal(expected, message.Result);
 
     }

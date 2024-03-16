@@ -1,15 +1,13 @@
-﻿namespace Restaurant365.Services.Services;
+﻿using Restaurant365.Utility;
+
+namespace Restaurant365.Services.Services;
 
 public class CalculatorService : ICalculatorService
 {
 
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true, int upperBounds = int.MaxValue)
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, bool supportNewLineDelimiter = true, bool allowNegativeNumbers = true, int upperBounds = int.MaxValue)
     {
-        var delimiterList = new string[] { "," }.ToList();
-
-        //Add new delimiter, if any
-        if (!string.IsNullOrEmpty(delimiter))
-            delimiterList.Add(delimiter);
+        var delimiterList = input.GetDelimiterList(supportNewLineDelimiter);
 
         //Convert invalid numbers, empty input or missing numbers to 0
         var inputEntries = input.Split(delimiterList.ToArray(), StringSplitOptions.None).ToList().Select(c =>
