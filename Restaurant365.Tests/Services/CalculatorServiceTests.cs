@@ -84,4 +84,15 @@ public class CalculatorServiceTests
         Assert.Equal(expected, message.Result);
 
     }
+
+    [Fact]
+    public void Calculate_WithDelimiter()
+    {
+        CalculatorService service = new();
+        var input = @"1\n2,3";
+        var expected = 6;
+        var message = service.Calculate(input, null, @"\n");
+        Assert.Equal(expected, message.Result);
+
+    }
 }

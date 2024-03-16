@@ -3,10 +3,16 @@
 public class CalculatorService : ICalculatorService
 {
 
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null)
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "")
     {
+        var delimiterList = new string[] { "," }.ToList();
+
+        //Add new delimiter, if any
+        if (!string.IsNullOrEmpty(delimiter))
+            delimiterList.Add(delimiter);
+
         //Convert invalid numbers, empty input or missing numbers to 0
-        var inputEntries = input.Split(',').ToList().Select(c =>
+        var inputEntries = input.Split(delimiterList.ToArray(), StringSplitOptions.None).ToList().Select(c =>
         {
             if (int.TryParse(c, out _))
                 return Int32.Parse(c);
@@ -16,7 +22,7 @@ public class CalculatorService : ICalculatorService
 
             if (!c.All(Char.IsDigit) || c.Length == 0)
                 c = "0";
-           
+
             return Int32.Parse(c);
         }).ToList();
 
