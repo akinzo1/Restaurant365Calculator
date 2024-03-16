@@ -116,4 +116,20 @@ public class CalculatorServiceTests
         Assert.Contains(expectedMessage, ex.Message);
 
     }
+
+    [Fact]
+    public void Calculate_NegativeNumbersNotAllowed_Pass()
+    {
+        var input = "5, 4,3 ";
+        CalculatorService service = new();
+
+        var exceptionType = typeof(InvalidOperationException);
+
+        var ex = Record.Exception(() => {
+            service.Calculate(input, null, string.Empty, false);
+        });
+
+        Assert.Null(ex);
+
+    }
 }

@@ -29,7 +29,11 @@ public class CalculatorService : ICalculatorService
         if (!allowNegativeNumbers)
         {
             var negativeNumbers = inputEntries.Where(o => o < 0).ToList();
-            throw new InvalidOperationException($"{string.Join(",", negativeNumbers)} not allowed");
+            //throw error only if there are actually negative numbers
+            if (negativeNumbers.Any())
+            {
+                throw new InvalidOperationException($"{string.Join(",", negativeNumbers)} not allowed");
+            }
         }
 
 
