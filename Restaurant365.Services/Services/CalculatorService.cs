@@ -3,7 +3,7 @@
 public class CalculatorService : ICalculatorService
 {
 
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "")
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true)
     {
         var delimiterList = new string[] { "," }.ToList();
 
@@ -26,10 +26,14 @@ public class CalculatorService : ICalculatorService
             return Int32.Parse(c);
         }).ToList();
 
+        if (!allowNegativeNumbers)
+        {
+            var negativeNumbers = inputEntries.Where(o => o < 0).ToList();
+            throw new InvalidOperationException($"{string.Join(",", negativeNumbers)} not allowed");
+        }
+
+
         //Check if we exceed the maximum constraint.
-        //Made this an argument so that we can keep
-        //the unit tests beyond this requirement for readability
-        //Default currently set at 2. I intend on using null to remove the constraint
         if (!maxConstraint.HasValue || inputEntries.Count <= maxConstraint)
         {
             var total = inputEntries.Sum();

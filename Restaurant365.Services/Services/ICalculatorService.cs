@@ -6,7 +6,9 @@ public interface ICalculatorService
     /// Operates addition on an input string. This function works for integer and decimal numbers. Decimals are converted to Integer whole numbers
     /// </summary>
     /// <param name="input">String to be operated on</param>
-    /// <param name="maxConstraint">Maximum number of entries after delimiter split</param>
+    /// <param name="maxConstraint">Maximum number of entries after delimiter split. Set to Null to remove constraint</param>
+    /// <param name="delimiter">Pass additional string that we will translated verbatim and used to split input string</param>
+    /// <param name="allowNegativeNumbers">Allow negative numbers to be processed in input string</param>
     /// <returns>A formula as well as an integer result of the Operation</returns>
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "");
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true);
 }

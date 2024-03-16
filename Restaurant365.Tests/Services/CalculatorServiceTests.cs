@@ -95,4 +95,25 @@ public class CalculatorServiceTests
         Assert.Equal(expected, message.Result);
 
     }
+
+    [Fact]
+    public void Calculate_NegativeNumbersNotAllowed_ThrowException_ConfirmMessage()
+    {
+        var input = "-5, -4,3 ";
+        var expectedMessage = "-5,-4";
+        CalculatorService service = new();
+
+        var exceptionType = typeof(InvalidOperationException);
+
+        var ex = Record.Exception(() => {
+            service.Calculate(input, null, string.Empty, false);
+        });
+
+        Assert.NotNull(ex);
+
+        Assert.IsType(exceptionType, ex);
+
+        Assert.Contains(expectedMessage, ex.Message);
+
+    }
 }

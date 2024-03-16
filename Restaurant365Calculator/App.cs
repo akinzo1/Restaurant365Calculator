@@ -14,7 +14,7 @@ public class App
     {
         Console.Write("Enter Input: ");
         var input = Console.ReadLine() ?? "";
-        var result =_service.Calculate(input, null, @"\n");
+        var result =_service.Calculate(input, null, @"\n", false);
         Console.WriteLine($"{result.Formula} = {result.Result}");
     }
 }
