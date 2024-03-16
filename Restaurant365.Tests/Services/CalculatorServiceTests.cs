@@ -132,4 +132,16 @@ public class CalculatorServiceTests
         Assert.Null(ex);
 
     }
+
+    [Fact]
+    public void Calculate_WithUpperBounds()
+    {
+        var input = "2,1001,6";
+        var expected = 8;
+        CalculatorService service = new();
+
+        var message = service.Calculate(input, null, string.Empty, true, 1000);
+        Assert.Equal(expected, message.Result);
+
+    }
 }

@@ -3,7 +3,7 @@
 public class CalculatorService : ICalculatorService
 {
 
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true)
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true, int upperBounds = int.MaxValue)
     {
         var delimiterList = new string[] { "," }.ToList();
 
@@ -14,8 +14,8 @@ public class CalculatorService : ICalculatorService
         //Convert invalid numbers, empty input or missing numbers to 0
         var inputEntries = input.Split(delimiterList.ToArray(), StringSplitOptions.None).ToList().Select(c =>
         {
-            if (int.TryParse(c, out _))
-                return Int32.Parse(c);
+            if (int.TryParse(c, out int d))
+                return d <= upperBounds ? d : 0;
 
             if (decimal.TryParse(c, out decimal n))
                 return Convert.ToInt32(n);

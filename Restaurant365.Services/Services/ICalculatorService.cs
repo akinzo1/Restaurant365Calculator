@@ -9,6 +9,7 @@ public interface ICalculatorService
     /// <param name="maxConstraint">Maximum number of entries after delimiter split. Set to Null to remove constraint</param>
     /// <param name="delimiter">Pass additional string that we will translated verbatim and used to split input string</param>
     /// <param name="allowNegativeNumbers">Allow negative numbers to be processed in input string</param>
+    /// <param name="upperBounds">Do not process numbers greater</param>
     /// <returns>A formula as well as an integer result of the Operation</returns>
-    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true);
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null, string delimiter = "", bool allowNegativeNumbers = true, int upperBounds = int.MaxValue);
 }
