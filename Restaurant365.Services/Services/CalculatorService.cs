@@ -3,7 +3,7 @@
 public class CalculatorService : ICalculatorService
 {
 
-    public (string Formula, int Result) Calculate(string input, int maxConstraint = 2)
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null)
     {
         //Convert invalid numbers, empty input or missing numbers to 0
         var inputEntries = input.Split(',').ToList().Select(c =>
@@ -24,7 +24,7 @@ public class CalculatorService : ICalculatorService
         //Made this an argument so that we can keep
         //the unit tests beyond this requirement for readability
         //Default currently set at 2. I intend on using null to remove the constraint
-        if (inputEntries.Count <= maxConstraint)
+        if (!maxConstraint.HasValue || inputEntries.Count <= maxConstraint)
         {
             var total = inputEntries.Sum();
             var displayFormula = string.Join(" + ", inputEntries);

@@ -8,5 +8,5 @@ public interface ICalculatorService
     /// <param name="input">String to be operated on</param>
     /// <param name="maxConstraint">Maximum number of entries after delimiter split</param>
     /// <returns>A formula as well as an integer result of the Operation</returns>
-    public (string Formula, int Result) Calculate(string input, int maxConstraint = 2);
+    public (string Formula, int Result) Calculate(string input, int? maxConstraint = null);
 }

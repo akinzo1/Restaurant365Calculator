@@ -73,4 +73,15 @@ public class CalculatorServiceTests
         Assert.Equal(expected, message.Result);
 
     }
+
+    [Fact]
+    public void Calculate_NoMaxConstraint()
+    {
+        CalculatorService service = new();
+        var input = "1,2,3,4,5,6,7,8,9,10,11,12";
+        var expected = 78;
+        var message = service.Calculate(input);
+        Assert.Equal(expected, message.Result);
+
+    }
 }
