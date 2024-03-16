@@ -15,13 +15,15 @@ namespace Restaurant365.Utility
 
             if (input != null && input.StartsWith("//"))
             {
-                //if adhering to single character format
+                //Retrieve the delimiter string
                 var delimiterInput = input.Between(@"//", @"\n"); 
-                var singlieDelimiterFromDelimiterInput = delimiterInput[0].ToString(); 
 
-                if (!string.IsNullOrEmpty(singlieDelimiterFromDelimiterInput) && !delimiterList.Contains(singlieDelimiterFromDelimiterInput))
+                //retrieve single custom delimiter of any length or single character
+                var singleDelimiterFromDelimiterInput = delimiterInput.StartsWith("[") ? delimiterInput.Between("[", "]") : delimiterInput[0].ToString(); 
+
+                if (!string.IsNullOrEmpty(singleDelimiterFromDelimiterInput) && !delimiterList.Contains(singleDelimiterFromDelimiterInput))
                 {
-                    delimiterList.Add(singlieDelimiterFromDelimiterInput.ToString());
+                    delimiterList.Add(singleDelimiterFromDelimiterInput.ToString());
                 }
 
             }

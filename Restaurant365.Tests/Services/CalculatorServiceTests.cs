@@ -146,7 +146,7 @@ public class CalculatorServiceTests
     }
 
     [Fact]
-    public void Calculate_NewLineSupported_SingleCustomDelimiter()
+    public void Calculate_SingleCustomDelimiter_SingleCharacter()
     {
         var input = @"//#\n2#5";
         var expected = 7;
@@ -158,10 +158,10 @@ public class CalculatorServiceTests
     }
 
     [Fact]
-    public void Calculate_NewLineNotSupported_SingleCustomDelimiter()
+    public void Calculate_SingleCustomDelimiter_MultipleCharacters()
     {
-        var input = @"//#\n2#5";
-        var expected = 5;
+        var input = @"//[***]\n11***22***33";
+        var expected = 66;
         CalculatorService service = new();
 
         var message = service.Calculate(input, null, false, true, 1000);

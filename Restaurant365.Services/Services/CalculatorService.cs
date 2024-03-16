@@ -9,6 +9,9 @@ public class CalculatorService : ICalculatorService
     {
         var delimiterList = input.GetDelimiterList(supportNewLineDelimiter);
 
+        //Remove delimiter portion of the string. Account for length of newline character
+        input = input.StartsWith("//") ? input.Substring(input.IndexOf(@"\n") + 2)  : input;
+
         //Convert invalid numbers, empty input or missing numbers to 0
         var inputEntries = input.Split(delimiterList.ToArray(), StringSplitOptions.None).ToList().Select(c =>
         {
